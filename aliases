@@ -1,0 +1,8 @@
+# Git aliases
+
+alias gc="git commit -m $0"
+alias gcb="git branch --show-current"
+
+# Functions
+
+alias ptf="clipboardToFile $2"

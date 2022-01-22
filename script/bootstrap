@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+
+DOTFILES_ROOT="$HOME/.dotfiles"
+DEFAULT_SHELL_CONFIG="$HOME/.zshrc"
+
+MANAGED_BLOCK="""
+# DOTFILES MANAGED BLOCK:START
+
+source $DOTFILES_ROOT/*
+
+# DOTFILES MANAGED BLOCK:END
+"""
+
+echo "🔨 Moving files over to $DOTFILES_ROOT"
+
+if [ ! -d $DOTFILES_ROOT ]
+then
+    mkdir $DOTFILES_ROOT
+fi
+
+cp aliases $DOTFILES_ROOT
+cp functions $DOTFILES_ROOT
+
+HAS_MANAGED_BLOCK=$(grep 'DOTFILES MANAGED BLOCK' $DEFAULT_SHELL_CONFIG)
+
+if [[ -z $HAS_MANAGED_BLOCK ]]
+then
+    echo "🔨 Setting up managed block in $DEFAULT_SHELL_CONFIG"
+
+    echo $MANAGED_BLOCK >> $DEFAULT_SHELL_CONFIG
+else
+    echo "🔥 Managed block already there, delete it and rerun this bootstrap."
+
+fi
+    
+source $DEFAULT_SHELL_CONFIG
+
+echo "✨ All done!"

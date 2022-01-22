@@ -1,0 +1,9 @@
+function clipboardToFile() {
+    if command -v xclip &> /dev/null
+    then
+        xclip -selection clipboard -o > $0
+    elif command -v pbpaste &> /dev/null
+    then
+        pbpaste > $0
+    fi
+}
